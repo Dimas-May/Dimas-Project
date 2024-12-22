@@ -1,4 +1,5 @@
 "use client";
+import ProductRow from "@/components/admin-panel/ProductRow";
 import { setLoading } from "@/redux/features/loadingSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import axios from "axios";
@@ -46,9 +47,24 @@ const Dashboard = () => {
                 <th>Actions</th>
               </tr>
             </thead>
+            <tbody>
+              {products.map((product: IProduct, index) => (
+                <ProductRow
+                  key={product._id}
+                  srNo={index + 1}
+                  setOpenPopup={setOpenPopup}
+                  setUpdateTable={setUpdateTable}
+                  product={product}
+                />
+              ))}
+            </tbody>
           </table>
         </div>
       </div>
+
+      {/*{openPopup && (
+        <Popup setOpenPopup={setOpenPopup} setUpdateTable={setUpdateTable} />
+  )} */}
     </div>
   );
 };
