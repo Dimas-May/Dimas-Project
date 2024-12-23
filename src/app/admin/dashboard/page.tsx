@@ -1,4 +1,5 @@
 "use client";
+import Popup from "@/components/admin-panel/Popup";
 import ProductRow from "@/components/admin-panel/ProductRow";
 import { setLoading } from "@/redux/features/loadingSlice";
 import { useAppDispatch } from "@/redux/hooks";
@@ -25,7 +26,7 @@ const Dashboard = () => {
     dispatch(setLoading(true));
 
     axios
-      .get("/api/get_products")
+      .get("./api/get_products")
       .then((res) => setProducts(res.data))
       .catch((err) => console.log(err))
       .finally(() => dispatch(setLoading(false)));
@@ -62,9 +63,9 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/*{openPopup && (
+      {openPopup && (
         <Popup setOpenPopup={setOpenPopup} setUpdateTable={setUpdateTable} />
-  )} */}
+      )}
     </div>
   );
 };
