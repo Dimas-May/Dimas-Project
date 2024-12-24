@@ -2,6 +2,7 @@
 import { setLoading } from "@/redux/features/loadingSlice";
 import { useAppDispatch } from "@/redux/hooks";
 import { makeToast } from "@/utils/helper";
+import { UploadButton } from "@/utils/uploadthing";
 import axios from "axios";
 import Image from "next/image";
 import React, { FormEvent, useState } from "react";
@@ -33,7 +34,7 @@ const ProductForm = () => {
     axios
       .post("/api/add_product", payLoad)
       .then((res) => {
-        makeToast("Product added Succsessfully");
+        makeToast("Product added Successfully");
         setPayLoad({
           imgSrc: null,
           fileKey: null,
@@ -55,6 +56,59 @@ const ProductForm = () => {
         height={500}
         alt="product_image"
       />
+
+      <UploadButton
+        endpoint="imageUploader"
+        onClientUploadComplete={(res) => {
+          //Do something with the response
+          console.log(res);
+
+          setPayLoad({
+            ...payLoad,
+            imgSrc: res[0]?.url,
+            fileKey: res[0]?.key,
+          });
+        }}
+        onUploadError={(error: Error) => {
+          //Do something with the error.
+          console.log("ERROR! ${error}");
+        }}
+      />
+
+      <div>
+        <label className="block ml-1">Product Name</label>
+        <input
+          className="bg-gray-300 w-full px-4 py-2 border outline-pink rounded-md"
+          type="text"
+          value={payLoad.name}
+          onChange={(e) => setPayLoad({ ...payLoad, name: e.target.value })}
+          required
+        />
+      </div>
+      <div>
+        <label className="block ml-1">Product Category</label>
+        <input
+          className="bg-gray-300 w-full px-4 py-2 border outline-pink rounded-md"
+          type="text"
+          value={payLoad.category}
+          onChange={(e) => setPayLoad({ ...payLoad, category: e.target.value })}
+          required
+        />
+      </div>
+      <div>
+        <label className="block ml-1">Product Price</label>
+        <input
+          className="bg-gray-300 w-full px-4 py-2 border outline-pink rounded-md"
+          type="text"
+          value={payLoad.price}
+          onChange={(e) => setPayLoad({ ...payLoad, price: e.target.value })}
+          required
+        />
+      </div>
+
+      <div className="flex justify-end">
+        <button className="bg-pink text-white px-8 py-2 rounded-md">Add</button>
+      </div>
     </form>
   );
 };
