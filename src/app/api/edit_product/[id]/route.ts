@@ -9,6 +9,7 @@ export async function PUT(request: NextRequest, URLParams: any) {
     const { name, category, price } = body;
 
     await connectMongoDB();
+    console.log(id, name, category, price);
 
     const data = await Product.findByIdAndUpdate(id, {
       name,
@@ -16,7 +17,7 @@ export async function PUT(request: NextRequest, URLParams: any) {
       price,
     });
 
-    return NextResponse.json({ msg: "Updated Succsessfully", data });
+    return NextResponse.json({ msg: "Updated Successfully", data });
   } catch (error) {
     return NextResponse.json(
       {

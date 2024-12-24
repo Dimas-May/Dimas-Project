@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
       price,
     });
 
-    return NextResponse.json({ msg: "Product addedd Successfully", data });
+    return NextResponse.json({ msg: "Product added Successfully", data });
   } catch (error) {
     return NextResponse.json(
       {

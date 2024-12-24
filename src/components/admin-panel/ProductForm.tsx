@@ -71,7 +71,7 @@ const ProductForm = () => {
         }}
         onUploadError={(error: Error) => {
           //Do something with the error.
-          console.log("ERROR! ${error}");
+          console.log(`ERROR! ${error}`);
         }}
       />
 
