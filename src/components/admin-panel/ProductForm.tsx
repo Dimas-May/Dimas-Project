@@ -32,7 +32,7 @@ const ProductForm = () => {
     Dispatch(setLoading(true));
 
     axios
-      .post("/api/add_product", payLoad)
+      .post("api/add_product", payLoad)
       .then((res) => {
         makeToast("Product added Successfully");
         setPayLoad({
@@ -48,7 +48,7 @@ const ProductForm = () => {
   };
 
   return (
-    <form className="flex flex-col gap-4 " onSubmit={handleSubmit}>
+    <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
       <Image
         className="max-h-[300px] w-auto object-contain rounded-md"
         src={payLoad.imgSrc ? payLoad.imgSrc : "/placeholder.jpg"}

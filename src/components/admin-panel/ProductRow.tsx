@@ -1,6 +1,9 @@
 import { IProduct } from "@/app/admin/dashboard/page";
+import { setLoading } from "@/redux/features/loadingSlice";
 import { setProduct } from "@/redux/features/productSlice";
 import { useAppDispatch } from "@/redux/hooks";
+import { makeToast } from "@/utils/helper";
+import axios from "axios";
 import Image from "next/image";
 import { Dispatch, SetStateAction } from "react";
 import { CiEdit } from "react-icons/ci";
@@ -27,7 +30,28 @@ const ProductRow = ({
   };
 
   const onDelete = () => {
-    // will do later
+    dispatch(setLoading(true));
+
+    const payLoad = {
+      fileKey: product.fileKey,
+    };
+
+    axios
+      .delete("/api/uploadthing", { data: payLoad })
+      .then((res) => {
+        console.log(res.data);
+
+        axios
+          .delete(`/api/delete_product/${product._id}`)
+          .then((res) => {
+            console.log(res.data);
+            makeToast("Product Deleted Successfully!");
+            setUpdateTable((prevState) => !prevState);
+          })
+          .catch((err) => console.log(err))
+          .finally(() => dispatch(setLoading(false)));
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
